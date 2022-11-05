@@ -45,6 +45,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Registerd Date</th>
                             <th scope="col">Options</th>
                           </tr>
                         </thead>
@@ -54,6 +55,7 @@
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>{{ $user->created_at->format('m-d-Y')}}</td>
                             <td>
                                 <a href="#" wire:click.prevent="edit({{ $user }})">
                                     <i class="fa fa-edit mr-2"></i>
@@ -66,6 +68,9 @@
                             @endforeach
                         </tbody>
                       </table>
+                </div>
+                <div class="card-footer d-flex justify-content-end">
+                    {{ $users->links() }}
                 </div>
               </div>
             </div>
@@ -81,7 +86,7 @@
       <!-- Modal -->
 <div class="modal fade" id="form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore.self>
     <div class="modal-dialog" role="document">
-        <form autocomplete="off" wire:submit.prevent='{{ $showEditModal ? 'updateUser':'createUser' }}'>
+        <form autocomplete="off" wire:submit.prevent={{ $showEditModal ? 'updateUser' : 'createUser' }}>
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
@@ -135,12 +140,12 @@
         </button>
         </div>
       </div>
+    </form>
     </div>
-</form>
   </div>
 
   <!-- Confirmation Modal -->
-  <div class="modal fade" id="confirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore.self>
+  <div class="modal fade" id="confirmation" tabindex="-1"      aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore.self>
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

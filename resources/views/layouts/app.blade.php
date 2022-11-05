@@ -15,6 +15,10 @@
   <link rel="stylesheet" href="{{asset('backend/dist/css/adminlte.min.css')}}">
 
   <Link rel="stylesheet" href="{{ asset('backend/plugins/toastr/toastr.min.css') }}">
+
+  <Link rel="stylesheet" href="{{ asset('backend/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+
+
   {{-- <livewire:styles/> --}}
   @livewireStyles
 </head>
@@ -52,6 +56,7 @@
 
 <!-- REQUIRED SCRIPTS -->
 
+
 <!-- jQuery -->
 <script src="{{asset('backend/plugins/jquery/jquery.min.js')}}"></script>
 <!-- Bootstrap 4 -->
@@ -60,33 +65,44 @@
 <script src="{{asset('backend/dist/js/adminlte.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('backend/plugins/toastr/toastr.min.js') }}"></script>
 
-    <script>
-      $(document).ready(function(){
+<script type="text/javascript" src="http://unpkg.com/moment"></script>
+<script type="text/javascript" src="{{ asset('backend/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+
+<script>
+    $(document).ready(function(){
         toastr.options={
-          "positionClass":"toast-bottom-right",
-          "progressBar":true,
+           "positionClass":"toast-bottom-right",
+           "progressBar":true,
+
         }
 
-    window.addEventListener('hide-form',event=>{
-    $('#form').modal('hide');
-    toastr.success(event.detail.message,'success!');
-     })
+        window.addEventListener('hide-form',event=>{
+        $('#form').modal('hide');
+        toastr.success(event.detail.message,'Success!');
+       });
+
+
     });
-    </script>
-    <script>
-window.addEventListener('show-form',event=>{
-    $('#form').modal('show');
-})
+</script>
+<script>
+    window.addEventListener('show-form',event=>{
+        $('#form').modal('show');
+    });
+
   window.addEventListener('show-delete-modal',event=>{
-    $('#confirmation').modal('show');
-  })
+         $('#confirmation').modal('show');
+  });
 
   window.addEventListener('hide-delete-modal',event=>{
-    $('#confirmation').modal('hide');
-    toastr.success(event.detail.message,'success!');
-  });
+        $('#confirmation').modal('hide');
+        toastr.success(event.detail.message,'Success!');
+       });
+
+
 </script>
 
+
+{{-- @stack('js') --}}
 {{-- <livewire:scripts/> --}}
 @livewireScripts
 </body>

@@ -4,9 +4,9 @@ namespace App\Http\Livewire\Admin\Users;
 use Illuminate\Support\Facades\Validator;
 use League\Flysystem\SafeStorage;
 use App\Models\User;
-use Livewire\Component;
+use App\Http\Livewire\Admin\AdminComponent;
 
-class ListUsers extends Component
+class ListUsers extends AdminComponent
 {
 
     // public $name;
@@ -14,12 +14,13 @@ class ListUsers extends Component
     // public $password;
     // public $password_confirmation;
 
+
     public $state=[];
 
     public $user;
     public $showEditModal=false;
 
-    public $userIdBeingRemoved;
+    public $userIdBeingRemoved=null;
 
     public function addNew(){
     //    dd('addNew');
@@ -44,9 +45,9 @@ class ListUsers extends Component
     User::create($validatedData);
 
     // session()->flash('message','User added successfuly!');
-    $this->dispatchBrowserEvent('hide-form',['message'=>'User added successfuly!']);
+    $this->dispatchBrowserEvent('hide-form',['message'=>'User added successfully!']);
 
-
+         return redirect()->back();
     }
 
     public function edit(User $user){
@@ -54,6 +55,8 @@ class ListUsers extends Component
         $this->showEditModal=true;
 
         $this->user=$user;
+
+        // dd($user->toArray());
 
         $this->state=$user->toArray();
 
@@ -64,6 +67,7 @@ class ListUsers extends Component
 
     public function updateUser(){
 
+        // dd("here");
         $validatedData=Validator::make($this->state,[
             'name'=>'required',
             'email'=>'required|email|unique:users,email,'.$this->user->id,
@@ -90,14 +94,14 @@ class ListUsers extends Component
   public function deleteUser(){
     // dd('delete Funciton');
     $user=User::findOrFail($this->userIdBeingRemoved);
-    // dd($this->user);
+    // dd($user);
     $user->delete();
 
     $this->dispatchBrowserEvent('hide-delete-modal',['message'=>'User deleted successfully!']);
   }
     public function render()
     {
-        $data=User::latest()->paginate();
+        $data=User::latest()->paginate(4);
         return view('livewire.admin.users.list-users',['users'=>$data]);
     }
 }
